@@ -1,10 +1,12 @@
-import Header from "../_components/header"
+
+import Header from "../_components/header";
+import SearchSection from "../_sections/search-section";
 
 export default function Home() {
   return (
     <main>
-      <Header/>
-      <h1>Homepage</h1>
+      <Header />
+      <SearchSection />
     </main>
   );
 }
