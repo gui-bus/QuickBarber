@@ -29,7 +29,6 @@ export default async function Home() {
 
   return (
     <main className="select-none">
-      <Header />
       <SearchSection />
 
       <div className="mt-6 flex select-none flex-col items-center justify-center gap-y-2 lg:hidden">

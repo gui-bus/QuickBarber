@@ -1,3 +1,4 @@
+'use client'
 import { Badge } from "@/app/_components/ui/badge";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent } from "@/app/_components/ui/card";
@@ -5,8 +6,15 @@ import { FaStar } from "react-icons/fa6";
 
 import { Barbershop } from "@prisma/client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const BarbershopItem = ({ barbershop }: Barbershop) => {
+  const router = useRouter();
+
+  const handleBookingClick = () => {
+    router.push(`/barbershops/${barbershop.id}`)
+  }
+
   return (
     <Card className="relative w-full rounded-2xl">
       <CardContent className="p-1">
@@ -27,7 +35,7 @@ const BarbershopItem = ({ barbershop }: Barbershop) => {
               {barbershop.address}
             </p>
           </div>
-          <Button variant={"outline"} className="w-full">
+          <Button variant={"outline"} className="w-full" onClick={handleBookingClick}>
             Reservar
           </Button>
         </div>
