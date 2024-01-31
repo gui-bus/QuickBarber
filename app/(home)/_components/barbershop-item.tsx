@@ -37,7 +37,7 @@ const BarbershopItem = ({ barbershop }: Barbershop) => {
           variant={"default"}
         >
           <FaStar size={13} className="text-primary" />
-          {barbershop.rating}
+          {barbershop.rating.toString()}
         </Badge>
       </CardContent>
     </Card>
