@@ -14,10 +14,20 @@ import {
 import { Barbershop } from "@prisma/client";
 
 export default async function Home() {
-  const barbershops: Barbershop[] = await db.barbershop.findMany({});
+  const barbershops: Barbershop[] = await db.barbershop.findMany({
+    where: {
+      recommended: true,
+    },
+  });
+
+  const popularBarbershops: Barbershop[] = await db.barbershop.findMany({
+    where: {
+      recommended: false,
+    },
+  });
 
   return (
-    <main>
+    <main className="select-none">
       <Header />
       <SearchSection />
 
@@ -29,6 +39,29 @@ export default async function Home() {
         <Carousel className="mx-auto w-full px-5 py-5 md:max-w-3xl lg:max-w-6xl">
           <CarouselContent>
             {barbershops.map((barbershop) => (
+              <CarouselItem
+                key={barbershop.id}
+                className="basis-1/2 md:basis-1/3 lg:basis-1/4"
+              >
+                <BarbershopItem barbershop={barbershop} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="hidden xl:block">
+            <CarouselPrevious />
+            <CarouselNext />
+          </div>
+        </Carousel>
+      </div>
+
+      <div className="mt-6 flex select-none flex-col items-center justify-center gap-y-2">
+        <h2 className="flex items-center gap-2 px-5 text-sm font-semibold uppercase text-neutral-300">
+          Populares <BsStars size={25} />
+        </h2>
+
+        <Carousel className="mx-auto w-full px-5 py-5 md:max-w-3xl lg:max-w-6xl">
+          <CarouselContent>
+            {popularBarbershops.map((barbershop) => (
               <CarouselItem
                 key={barbershop.id}
                 className="basis-1/2 md:basis-1/3 lg:basis-1/4"

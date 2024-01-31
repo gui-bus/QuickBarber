@@ -20,7 +20,9 @@ const BarbershopItem = ({ barbershop }: Barbershop) => {
         />
         <div className="flex flex-col gap-y-4 p-2">
           <div>
-            <h2 className="font-bold line-clamp-1 truncate">{barbershop.name}</h2>
+            <h2 className="line-clamp-1 truncate font-bold">
+              {barbershop.name}
+            </h2>
             <p className="line-clamp-1 truncate text-sm text-muted-foreground">
               {barbershop.address}
             </p>
@@ -31,10 +33,11 @@ const BarbershopItem = ({ barbershop }: Barbershop) => {
         </div>
 
         <Badge
-          className="absolute left-4 top-4 z-10 text-white flex items-center gap-1 bg-secondary/80 hover:bg-secondary/80"
+          className="absolute left-4 top-4 z-10 flex items-center gap-1 bg-secondary/80 text-white hover:bg-secondary/80"
           variant={"default"}
         >
-          <FaStar size={13} className="text-primary"/>5.0
+          <FaStar size={13} className="text-primary" />
+          {barbershop.rating}
         </Badge>
       </CardContent>
     </Card>

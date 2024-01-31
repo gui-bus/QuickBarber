@@ -17,7 +17,11 @@ import {
 import BarbershopItem from "../(home)/_components/barbershop-item";
 
 const SearchSection = async () => {
-  const barbershops: Barbershop[] = await db.barbershop.findMany({});
+  const barbershops: Barbershop[] = await db.barbershop.findMany({
+    where: {
+      recommended: true,
+    },
+  });
 
   return (
     <section className=" bg-[url('/capa.png')] bg-cover bg-center bg-no-repeat px-5 py-10">
