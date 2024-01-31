@@ -12,6 +12,7 @@ import {
 } from "../_components/ui/carousel";
 
 import { Barbershop } from "@prisma/client";
+import AboutSection from "../_sections/about-section";
 
 export default async function Home() {
   const barbershops: Barbershop[] = await db.barbershop.findMany({
@@ -54,6 +55,10 @@ export default async function Home() {
         </Carousel>
       </div>
 
+      <div className="md:hidden">
+        <AboutSection />
+      </div>
+
       <div className="mt-6 flex select-none flex-col items-center justify-center gap-y-2">
         <h2 className="flex items-center gap-2 px-5 text-sm font-semibold uppercase text-neutral-300">
           Populares <BsStars size={25} />
@@ -75,6 +80,10 @@ export default async function Home() {
             <CarouselNext />
           </div>
         </Carousel>
+      </div>
+
+      <div className="hidden md:block">
+        <AboutSection />
       </div>
     </main>
   );
