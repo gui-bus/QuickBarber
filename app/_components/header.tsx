@@ -14,7 +14,7 @@ import { Button } from "./ui/button";
 const Header = () => {
   return (
     <Card>
-      <CardContent className="flex items-center justify-around p-5">
+      <CardContent className="mx-auto flex w-full max-w-7xl items-center justify-around p-5">
         <Image
           src="/logo.png"
           alt="Quick Barber"
