@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Barbershop" ALTER COLUMN "rating" DROP DEFAULT,
+ALTER COLUMN "rating" SET DATA TYPE DECIMAL(10,2);

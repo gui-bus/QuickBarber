@@ -60,7 +60,7 @@ model Barbershop {
   imageUrl    String
   phone       String
   recommended Boolean   @default(false)
-  rating      Decimal   @default(0) @db.Decimal(1, 1)
+  rating      Decimal   @db.Decimal(10, 2)
   bookings    Booking[]
   services    Service[]
 }
