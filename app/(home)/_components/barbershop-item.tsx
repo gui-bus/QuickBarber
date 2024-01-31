@@ -1,12 +1,14 @@
+import { Badge } from "@/app/_components/ui/badge";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent } from "@/app/_components/ui/card";
+import { FaStar } from "react-icons/fa6";
 
 import { Barbershop } from "@prisma/client";
 import Image from "next/image";
 
 const BarbershopItem = ({ barbershop }: Barbershop) => {
   return (
-    <Card className="w-full rounded-2xl">
+    <Card className="relative w-full rounded-2xl">
       <CardContent className="p-1">
         <Image
           src={barbershop.imageUrl}
@@ -18,7 +20,7 @@ const BarbershopItem = ({ barbershop }: Barbershop) => {
         />
         <div className="flex flex-col gap-y-4 p-2">
           <div>
-            <h2 className="font-bold">{barbershop.name}</h2>
+            <h2 className="font-bold line-clamp-1 truncate">{barbershop.name}</h2>
             <p className="line-clamp-1 truncate text-sm text-muted-foreground">
               {barbershop.address}
             </p>
@@ -27,6 +29,13 @@ const BarbershopItem = ({ barbershop }: Barbershop) => {
             Reservar
           </Button>
         </div>
+
+        <Badge
+          className="absolute left-4 top-4 z-10 text-white flex items-center gap-1 bg-secondary/80 hover:bg-secondary/80"
+          variant={"default"}
+        >
+          <FaStar size={13} className="text-primary"/>5.0
+        </Badge>
       </CardContent>
     </Card>
   );
