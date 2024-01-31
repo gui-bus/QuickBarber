@@ -58,9 +58,13 @@ model Barbershop {
   name        String
   address     String
   imageUrl    String
-  phone       String
+  phone       String[]
   recommended Boolean   @default(false)
   rating      Decimal   @db.Decimal(10, 2)
+  ratingQTD   Int       @default(1)
+  description String    @default("")
+  bonusItems  String[]
+  openings    String[]
   bookings    Booking[]
   services    Service[]
 }
