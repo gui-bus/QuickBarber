@@ -1,14 +1,14 @@
 import { Button } from "@/app/_components/ui/button";
 import { db } from "@/app/_lib/prisma";
-import { ChevronLeftIcon, MapPinIcon } from "lucide-react";
+import { ChevronLeftIcon } from "lucide-react";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { PiMapPinFill } from "react-icons/pi";
 import { FaStar } from "react-icons/fa6";
 import { FaWhatsapp } from "react-icons/fa";
 import Image from "next/image";
 import { Barbershop } from "@prisma/client";
 import { Separator } from "@/app/_components/ui/separator";
 import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
-import { FiClock } from "react-icons/fi";
 
 interface BarbershopDetailsProps {
   params: {
@@ -32,7 +32,7 @@ const BarbershopDetails = async ({ params }: BarbershopDetailsProps) => {
   }
 
   return (
-    <div className="mx-auto flex w-full flex-col lg:my-5 lg:flex-row lg:pl-5">
+    <div className="mx-auto flex w-full max-w-7xl flex-col lg:my-5 lg:flex-row">
       <div className="relative mx-auto h-64 w-full lg:hidden lg:h-96">
         <Button variant={"outline"} className="absolute left-4 top-4 z-50">
           <ChevronLeftIcon />
@@ -68,7 +68,7 @@ const BarbershopDetails = async ({ params }: BarbershopDetailsProps) => {
         </Button>
 
         <div className="flex flex-col gap-y-4 p-5 lg:w-2/3">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-5">
+          <div className="flex flex-col items-center justify-between gap-5 lg:flex-row">
             <div className="flex items-center justify-around gap-2 lg:pl-5">
               <div>
                 <h1 className="mb-3 hidden text-center text-2xl font-bold md:block md:text-3xl">
@@ -76,7 +76,7 @@ const BarbershopDetails = async ({ params }: BarbershopDetailsProps) => {
                 </h1>
                 <div className="flex flex-col flex-wrap items-center justify-center gap-2 lg:flex-row lg:gap-4">
                   <p className="line-clamp-1 flex items-center gap-2 truncate text-sm">
-                    <MapPinIcon size={20} className="text-primary" />{" "}
+                    <PiMapPinFill size={20} className="text-primary" />{" "}
                     {barbershop.address}
                   </p>
 
@@ -116,19 +116,20 @@ const BarbershopDetails = async ({ params }: BarbershopDetailsProps) => {
                   Para melhor atendê-los também proporcionamos alguns itens
                   como:{" "}
                 </h4>
-                <div className="mx-auto grid grid-cols-2 gap-x-3 gap-y-3 lg:flex lg:flex-wrap lg:gap-x-0">
+                <div className="mx-auto grid grid-cols-2 gap-x-3 gap-y-3 lg:grid-cols-3">
                   {barbershop.bonusItems.map(
                     (bonusItem: string, index: any) => (
                       <div
-                        className="flex w-full items-center justify-start gap-2 text-sm font-medium md:w-1/2"
+                        className="flex w-full items-center justify-start gap-2 text-sm font-medium"
                         key={index}
                       >
-                        <IoMdCheckmarkCircleOutline
-                          size={20}
-                          className="text-primary"
-                        />
-
-                        <p>{bonusItem}</p>
+                        <p className="flex items-center gap-2">
+                          <IoMdCheckmarkCircleOutline
+                            size={20}
+                            className="text-primary"
+                          />
+                          {bonusItem}
+                        </p>
                       </div>
                     ),
                   )}
