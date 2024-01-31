@@ -17,13 +17,20 @@ const BarbershopDetails = async ({ params }: BarbershopDetailsProps) => {
     where: {
       id: params.id,
     },
+    include: {
+      services: true
+    }
   });
 
   if (!barbershop) {
     return null;
   }
 
-  return <BarbershopInfo barbershop={barbershop} />;
+  return (
+    <div>
+      <BarbershopInfo barbershop={barbershop} />
+    </div>
+  );
 };
 
 export default BarbershopDetails;
