@@ -54,13 +54,15 @@ model VerificationToken {
 }
 
 model Barbershop {
-  id       String    @id @default(uuid())
-  name     String
-  address  String
-  imageUrl String
-  phone    String
-  bookings Booking[]
-  services Service[]
+  id          String    @id @default(uuid())
+  name        String
+  address     String
+  imageUrl    String
+  phone       String
+  recommended Boolean   @default(false)
+  rating      Decimal   @default(0) @db.Decimal(1, 1)
+  bookings    Booking[]
+  services    Service[]
 }
 
 model Booking {
