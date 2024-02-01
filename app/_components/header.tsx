@@ -63,8 +63,11 @@ const Header = () => {
           <div>
             <div className="hidden items-center justify-center gap-4 md:flex">
               {data?.user && status === "authenticated" && (
-                <Button variant={"ghost"}>
-                  Agendamentos <IoCalendarOutline className="ml-2" size={20} />
+                <Button variant={"ghost"} asChild>
+                  <Link href="/bookings">
+                    Agendamentos{" "}
+                    <IoCalendarOutline className="ml-2" size={20} />
+                  </Link>
                 </Button>
               )}
               {!data?.user && status === "unauthenticated" ? (
@@ -140,23 +143,31 @@ const Header = () => {
                       <Separator className="my-5" />
 
                       <div className="flex w-full flex-col gap-2">
-                        <Link href="/">
-                          <Button
-                            variant={"outline"}
-                            className="flex w-full items-center justify-center gap-2 text-white"
+                        <Button
+                          variant={"outline"}
+                          className=" text-white"
+                          asChild
+                        >
+                          <Link
+                            href="/"
+                            className="flex w-full items-center justify-center gap-2"
                           >
                             Página Inicial <RiPagesLine size={20} />
-                          </Button>
-                        </Link>
+                          </Link>
+                        </Button>
 
-                        <Link href="">
-                          <Button
-                            variant={"outline"}
-                            className="flex w-full items-center justify-center gap-2 text-white"
+                        <Button
+                          variant={"outline"}
+                          className=" text-white"
+                          asChild
+                        >
+                          <Link
+                            href="/bookings"
+                            className="flex w-full items-center justify-center gap-2"
                           >
                             Agendamentos <IoCalendarOutline size={20} />
-                          </Button>
-                        </Link>
+                          </Link>
+                        </Button>
 
                         <Button
                           onClick={handleLogoutClick}
