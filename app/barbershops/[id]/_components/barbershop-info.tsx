@@ -124,6 +124,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
                       key={service.id}
                       service={service}
                       isAuthenticated={!!data?.user}
+                      barbershop={barbershop}
                     />
                   ))}
                 </div>
@@ -287,6 +288,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
               key={service.id}
               service={service}
               isAuthenticated={!!data?.user}
+              barbershop={barbershop}
             />
           ))}
         </div>
