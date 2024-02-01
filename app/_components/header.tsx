@@ -122,23 +122,35 @@ const Header = () => {
                     <SheetTitle>Menu</SheetTitle>
                     <SheetDescription className="flex flex-col items-center justify-center">
                       <Separator className="my-2" />
-                      <Card className="mt-5 bg-[url('/capa.png')] bg-cover bg-center bg-no-repeat">
-                        <CardHeader className="flex flex-col gap-2">
-                          <div className="flex cursor-pointer items-center gap-4">
-                            <Avatar className="select-none">
-                              <AvatarImage src={data?.user?.image as string} />
-                              <AvatarFallback>
-                                <FaUser />
-                              </AvatarFallback>
-                            </Avatar>
-                            <p className="text-sm">{data?.user?.name}</p>
-                          </div>
+                      {status === "authenticated" ? (
+                        <Card className="mt-5 bg-[url('/capa.png')] bg-cover bg-center bg-no-repeat">
+                          <CardHeader className="flex flex-col gap-2">
+                            <div className="flex cursor-pointer items-center gap-4">
+                              <Avatar className="select-none">
+                                <AvatarImage
+                                  src={data?.user?.image as string}
+                                />
+                                <AvatarFallback>
+                                  <FaUser />
+                                </AvatarFallback>
+                              </Avatar>
+                              <p className="text-sm">{data?.user?.name}</p>
+                            </div>
 
-                          <p className="text-sm text-muted-foreground">
-                            {data?.user?.email}
-                          </p>
-                        </CardHeader>
-                      </Card>
+                            <p className="text-sm text-muted-foreground">
+                              {data?.user?.email}
+                            </p>
+                          </CardHeader>
+                        </Card>
+                      ) : (
+                        <Button
+                          onClick={handleLoginClick}
+                          variant={"default"}
+                          className="flex items-center justify-center gap-2 text-white w-full mt-4"
+                        >
+                          Login <ImEnter size={20} />
+                        </Button>
+                      )}
 
                       <Separator className="my-5" />
 
@@ -169,13 +181,15 @@ const Header = () => {
                           </Link>
                         </Button>
 
-                        <Button
-                          onClick={handleLogoutClick}
-                          variant={"outline"}
-                          className="flex items-center justify-center gap-2 text-white"
-                        >
-                          Logout <ImExit size={20} />
-                        </Button>
+                        {status === "authenticated" && (
+                          <Button
+                            onClick={handleLogoutClick}
+                            variant={"outline"}
+                            className="flex items-center justify-center gap-2 text-white"
+                          >
+                            Logout <ImExit size={20} />
+                          </Button>
+                        )}
                       </div>
                     </SheetDescription>
                   </SheetHeader>
