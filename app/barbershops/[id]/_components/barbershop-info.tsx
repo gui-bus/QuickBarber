@@ -25,11 +25,11 @@ interface BarbershopInfoProps {
 }
 
 const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
-  const { data } = useSession();
+  const { data, status } = useSession();
   const router = useRouter();
-  
+
   const handleBackClick = () => {
-    router.replace("/");
+    router.back();
   };
 
   return (
@@ -120,7 +120,11 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
               <TabsContent value="services" className="w-full">
                 <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                   {barbershop.services.map((service: Service) => (
-                    <ServiceItem key={service.id} service={service} isAuthenticated={!!data?.user}/>
+                    <ServiceItem
+                      key={service.id}
+                      service={service}
+                      isAuthenticated={!!data?.user}
+                    />
                   ))}
                 </div>
               </TabsContent>
@@ -261,19 +265,29 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
           <h2 className="flex items-center gap-2 text-2xl font-semibold uppercase">
             Serviços <HiScissors size={25} className="text-primary" />
           </h2>
-          <p className="font-sm font-light">
+          <p className="text-sm font-light">
             Descubra a variedade de serviços oferecidos pela {barbershop.name} e
             escolha o que mais combina com você.
           </p>
-          <p className="font-sm font-medium ">
+          <p className="text-sm font-medium ">
             Estamos prontos para transformar sua experiência em algo único e
             especial.
           </p>
+
+          {status === "unauthenticated" && (
+            <p className="text-xs text-red-500">
+              Para reservar um serviço é preciso estar logado!
+            </p>
+          )}
         </div>
 
         <div className="mb-5 grid-cols-1 gap-5 px-5 md:grid-cols-2 lg:grid xl:grid-cols-3">
           {barbershop.services.map((service: Service) => (
-            <ServiceItem key={service.id} service={service} isAuthenticated={!!data?.user}/>
+            <ServiceItem
+              key={service.id}
+              service={service}
+              isAuthenticated={!!data?.user}
+            />
           ))}
         </div>
       </div>
