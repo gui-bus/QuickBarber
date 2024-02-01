@@ -132,7 +132,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
                 <div className="mt-5 flex flex-col items-center justify-between gap-5 lg:flex-row">
                   <Card className="lg:w-full">
                     <CardContent className="flex flex-col gap-5 p-5">
-                      <div className="flex flex-col text-center md:text-start">
+                      <div className="flex flex-col text-center">
                         <h3 className="text-xl font-bold">Sobre nós</h3>
                         <Separator className="my-4" />
                         <p className="text-sm font-light">
@@ -167,7 +167,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
                     </CardContent>
                   </Card>
 
-                  <div className="flex w-full flex-col gap-5 lg:w-fit">
+                  {/* <div className="flex w-full flex-col gap-5 lg:w-fit">
                     <Card>
                       <CardHeader className="flex items-center justify-center text-center">
                         Horário de Funcionamento
@@ -188,7 +188,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
                         </div>
                       </CardContent>
                     </Card>
-                  </div>
+                  </div> */}
                 </div>
               </TabsContent>
             </Tabs>
@@ -196,7 +196,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
             <div className="mt-5 hidden flex-col items-center justify-between gap-5 lg:flex lg:flex-row">
               <Card className="lg:w-full">
                 <CardContent className="flex flex-col gap-5 p-5">
-                  <div className="flex flex-col text-center md:text-start">
+                  <div className="flex flex-col text-center ">
                     <h3 className="text-xl font-bold">Sobre nós</h3>
                     <Separator className="my-4" />
                     <p className="text-sm font-light">
@@ -206,7 +206,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
 
                   <Separator />
 
-                  <h4 className="text-center text-sm font-light lg:text-start">
+                  <h4 className="text-center text-sm font-light">
                     Para melhor atendê-los também proporcionamos alguns itens
                     como:{" "}
                   </h4>
@@ -231,7 +231,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
                 </CardContent>
               </Card>
 
-              <div className="flex w-full flex-col gap-5 lg:w-fit">
+              {/* <div className="flex w-full flex-col gap-5 lg:w-fit">
                 <Card>
                   <CardHeader className="flex items-center justify-center text-center">
                     Horário de Funcionamento
@@ -252,7 +252,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
                     </div>
                   </CardContent>
                 </Card>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
