@@ -36,7 +36,7 @@ const BarbershopItem = ({ barbershop }: Barbershop) => {
             </p>
           </div>
           <Button variant={"outline"} className="w-full" onClick={handleBookingClick}>
-            Reservar
+            Ver detalhes
           </Button>
         </div>
 
