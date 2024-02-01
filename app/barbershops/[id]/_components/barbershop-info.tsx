@@ -18,12 +18,14 @@ import { Barbershop, Service } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import ServiceItem from "./service-item";
 import { HiScissors } from "react-icons/hi2";
+import { useSession } from "next-auth/react";
 
 interface BarbershopInfoProps {
   barbershop: Barbershop;
 }
 
 const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
+  const { data } = useSession();
   const router = useRouter();
   const handleBackClick = () => {
     router.back();
@@ -117,7 +119,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
               <TabsContent value="services" className="w-full">
                 <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                   {barbershop.services.map((service: Service) => (
-                    <ServiceItem key={service.id} service={service} />
+                    <ServiceItem key={service.id} service={service} isAuthenticated={!!data?.user}/>
                   ))}
                 </div>
               </TabsContent>
@@ -270,7 +272,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
 
         <div className="mb-5 grid-cols-1 gap-5 px-5 md:grid-cols-2 lg:grid xl:grid-cols-3">
           {barbershop.services.map((service: Service) => (
-            <ServiceItem key={service.id} service={service} />
+            <ServiceItem key={service.id} service={service} isAuthenticated={!!data?.user}/>
           ))}
         </div>
       </div>

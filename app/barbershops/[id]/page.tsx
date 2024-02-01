@@ -9,6 +9,7 @@ interface BarbershopDetailsProps {
 }
 
 const BarbershopDetails = async ({ params }: BarbershopDetailsProps) => {
+
   if (!params.id) {
     return null;
   }
