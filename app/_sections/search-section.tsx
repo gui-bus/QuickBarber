@@ -1,5 +1,3 @@
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import Search from "../(home)/_components/search";
 import BookingItem from "../_components/booking-item";
 import { MdOutlineBookmarkAdded } from "react-icons/md";
@@ -15,6 +13,7 @@ import {
   CarouselPrevious,
 } from "../_components/ui/carousel";
 import BarbershopItem from "../(home)/_components/barbershop-item";
+import WelcomeMessage from "../(home)/_components/welcome-message";
 
 const SearchSection = async () => {
   const barbershops: Barbershop[] = await db.barbershop.findMany({
@@ -27,14 +26,7 @@ const SearchSection = async () => {
     <section className=" bg-[url('/capa.png')] bg-cover bg-center bg-no-repeat px-5 py-10">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-around gap-5">
         <div className="flex w-full max-w-sm flex-col gap-y-5">
-          <div className="flex flex-col">
-            <h2 className="text-xl font-bold">Olá, Guilherme!</h2>
-            <p className="text-sm capitalize">
-              {format(new Date(), "EEEE',' dd 'de' MMMM", {
-                locale: ptBR,
-              })}
-            </p>
-          </div>
+          <WelcomeMessage/>
 
           <Search />
 
