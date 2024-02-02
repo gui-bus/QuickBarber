@@ -21,8 +21,9 @@ import { format, setHours, setMinutes } from "date-fns";
 import { IoMdCheckboxOutline } from "react-icons/io";
 import { saveBooking } from "../_actions/save-booking";
 import { useSession } from "next-auth/react";
-import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface ServiceItemProps {
   barbershop: Barbershop;
@@ -35,10 +36,12 @@ const ServiceItem = ({
   isAuthenticated,
   barbershop,
 }: ServiceItemProps) => {
+  const router = useRouter();
   const { data } = useSession();
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [hour, setHour] = useState<string | undefined>();
   const [submitIsLoading, setSubmitIsLoading] = useState(false);
+  const [sheetIsOpen, setSheetIsOpen] = useState(false);
 
   const handleDateClick = (date: Date | undefined) => {
     setDate(date);
@@ -70,11 +73,24 @@ const ServiceItem = ({
         userId: (data.user as any).id,
       });
 
-      return toast.success("Reserva criada com sucesso!", {
-        style: {
-          fontSize: "12px",
+      setSheetIsOpen(false);
+      setHour(undefined);
+      setDate(undefined);
+
+      toast("Reserva realizada com sucesso!", {
+        description: format(
+          newDate,
+          "'Para o dia' dd 'de' MMMM 'às' HH':'mm'.'",
+          {
+            locale: ptBR,
+          },
+        ),
+        action: {
+          label: "Visualizar",
+          onClick: () => router.push("/bookings"),
         },
       });
+
     } catch (error) {
       return toast.error("Ocorreu um erro ao criar sua reserva!", {
         style: {
@@ -115,7 +131,7 @@ const ServiceItem = ({
                 })}
               </p>
 
-              <Sheet>
+              <Sheet open={sheetIsOpen} onOpenChange={setSheetIsOpen}>
                 <SheetTrigger asChild>
                   <Button variant={"outline"} disabled={!isAuthenticated}>
                     Reservar
