@@ -223,38 +223,36 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               </AlertDialogTrigger>
               <AlertDialogContent className="w-[90%] rounded-xl">
                 <AlertDialogHeader>
-                  <AlertDialogTitle className="text-base">
+                  <AlertDialogTitle className="text-center text-base">
                     Tem certeza que deseja{" "}
-                    {isPast(booking.date) ? "remover" : "cancelar"} esse
+                    {isPast(booking.date) ? "apagar" : "cancelar"} esse
                     agendamento?
                   </AlertDialogTitle>
                   <AlertDialogDescription>
-                    <p className="text-sm">Esta ação não pode ser desfeita!</p>
+                    <p className="text-center text-sm">
+                      Esta ação não pode ser desfeita!
+                    </p>
                   </AlertDialogDescription>
                 </AlertDialogHeader>
-                <AlertDialogFooter className="flex flex-col gap-4 md:flex-row">
-                  <AlertDialogCancel>Voltar</AlertDialogCancel>
-                  <AlertDialogAction asChild>
-                    <Button
-                      onClick={handleCancelClick}
-                      className="w-full text-white"
-                      variant={"destructive"}
-                      disabled={cancelIsLoading}
-                    >
-                      {cancelIsLoading ? (
-                        <span className="flex items-center gap-4">
-                          <ClipLoader color="#fff" size={20} />{" "}
-                          {isPast(booking.date) ? "Removendo" : "Cancelando"}{" "}
-                          reserva...
-                        </span>
-                      ) : (
-                        <span className="flex items-center gap-4">
-                          Confirmar{" "}
-                          {isPast(booking.date) ? "remoção" : "cancelamento"}
-                          <LuCalendarX2 size={25} className="ml-2" />
-                        </span>
-                      )}
-                    </Button>
+                <AlertDialogFooter className="flex flex-col md:flex-row">
+                  <AlertDialogCancel className="w-full">
+                    Voltar
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    disabled={cancelIsLoading}
+                    onClick={handleCancelClick}
+                    className="w-full"
+                  >
+                    {cancelIsLoading ? (
+                      <span className="flex items-center gap-4">
+                        <ClipLoader color="#fff" size={20} />{" "}
+                        {isPast(booking.date)
+                          ? "Removendo..."
+                          : "Cancelando..."}
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-4">Confirmar</span>
+                    )}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
