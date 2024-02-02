@@ -34,7 +34,7 @@ const SearchSection = async () => {
             <h2 className="flex items-center gap-2 text-sm font-semibold uppercase text-neutral-300">
               Agendamentos <MdOutlineBookmarkAdded size={25} />
             </h2>
-            <BookingItem />
+            {/* <BookingItem /> */}
           </div>
         </div>
 
