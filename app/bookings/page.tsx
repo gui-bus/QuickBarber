@@ -8,6 +8,7 @@ import { Booking } from "@prisma/client";
 import { Separator } from "../_components/ui/separator";
 import { IoCheckmarkDone, IoCheckmark } from "react-icons/io5";
 import { isFuture, isPast } from "date-fns";
+import { Card, CardContent } from "../_components/ui/card";
 
 const BookingsPage = async () => {
   const session = await getServerSession(authOptions);
@@ -59,11 +60,21 @@ const BookingsPage = async () => {
         <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase text-muted-foreground">
           Confirmados <IoCheckmark size={25} />
         </h2>
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
-          {confirmedBookings.map((booking: Booking) => (
-            <BookingItem key={booking.id} booking={booking} />
-          ))}
-        </div>
+        {confirmedBookings.length > 0 ? (
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
+            {confirmedBookings.map((booking: Booking) => (
+              <BookingItem key={booking.id} booking={booking} />
+            ))}
+          </div>
+        ) : (
+          <Card className="mt-5 w-fit">
+            <CardContent className="p-5">
+              <h4 className="text-xs">
+                Você ainda não possui nenhum agendamento confirmado
+              </h4>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       <Separator />
@@ -72,11 +83,21 @@ const BookingsPage = async () => {
         <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase text-muted-foreground">
           Finalizados <IoCheckmarkDone size={25} />
         </h2>
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
-          {finishedBookings.map((booking: Booking) => (
-            <BookingItem key={booking.id} booking={booking} />
-          ))}
-        </div>
+        {finishedBookings.length > 0 ? (
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
+            {finishedBookings.map((booking: Booking) => (
+              <BookingItem key={booking.id} booking={booking} />
+            ))}
+          </div>
+        ) : (
+          <Card className="mt-5 w-fit">
+            <CardContent className="p-5">
+              <h4 className="text-xs">
+                Você ainda não possui nenhum agendamento finalizado
+              </h4>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
