@@ -16,37 +16,38 @@ const BookingsPage = async () => {
     return redirect("/");
   }
 
-  const confirmedBookings = await db.booking.findMany({
-    where: {
-      userId: (session.user as any).id,
-      date: {
-        gte: new Date(),
-      }
-    },
-    include: {
-      service: true,
-      barbershop: true,
-    },
-    orderBy: {
-      date: 'asc'
-    }
-  });
-
-  const finishedBookings = await db.booking.findMany({
-    where: {
-      userId: (session.user as any).id,
-      date: {
-        lt: new Date(),
-      }
-    },
-    include: {
-      service: true,
-      barbershop: true,
-    },
-    orderBy: {
-      date: 'asc'
-    }
-  });
+  const [confirmedBookings, finishedBookings] = await Promise.all([
+    db.booking.findMany({
+      where: {
+        userId: (session.user as any).id,
+        date: {
+          gte: new Date(),
+        },
+      },
+      include: {
+        service: true,
+        barbershop: true,
+      },
+      orderBy: {
+        date: "asc",
+      },
+    }),
+    db.booking.findMany({
+      where: {
+        userId: (session.user as any).id,
+        date: {
+          lt: new Date(),
+        },
+      },
+      include: {
+        service: true,
+        barbershop: true,
+      },
+      orderBy: {
+        date: "asc",
+      },
+    }),
+  ]);
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 p-5">

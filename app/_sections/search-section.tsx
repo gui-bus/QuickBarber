@@ -20,29 +20,30 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 const SearchSection = async () => {
   const session = await getServerSession(authOptions);
 
-  const confirmedBookings = session?.user
-    ? await db.booking.findMany({
-        where: {
-          userId: (session?.user as any).id,
-          date: {
-            gte: new Date(),
+  const [barbershops, confirmedBookings] = await Promise.all([
+    db.barbershop.findMany({
+      where: {
+        recommended: true,
+      },
+    }),
+    session?.user
+      ? db.booking.findMany({
+          where: {
+            userId: (session?.user as any).id,
+            date: {
+              gte: new Date(),
+            },
           },
-        },
-        include: {
-          service: true,
-          barbershop: true,
-        },
-        orderBy: {
-          date: "asc",
-        },
-      })
-    : [];
-
-  const barbershops: Barbershop[] = await db.barbershop.findMany({
-    where: {
-      recommended: true,
-    },
-  });
+          include: {
+            service: true,
+            barbershop: true,
+          },
+          orderBy: {
+            date: "asc",
+          },
+        })
+      : Promise.resolve([]),
+  ]);
 
   return (
     <section className=" bg-[url('/capa.png')] bg-cover bg-center bg-no-repeat px-5 py-10">
@@ -80,7 +81,7 @@ const SearchSection = async () => {
 
           <Carousel className="mx-auto w-full max-w-2xl px-5 py-5">
             <CarouselContent>
-              {barbershops.map((barbershop) => (
+              {barbershops.map((barbershop: any) => (
                 <CarouselItem
                   key={barbershop.id}
                   className="basis-1/2 md:basis-1/3"
