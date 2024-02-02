@@ -14,8 +14,30 @@ import {
 } from "../_components/ui/carousel";
 import BarbershopItem from "../(home)/_components/barbershop-item";
 import WelcomeMessage from "../(home)/_components/welcome-message";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 const SearchSection = async () => {
+  const session = await getServerSession(authOptions);
+
+  const confirmedBookings = session?.user
+    ? await db.booking.findMany({
+        where: {
+          userId: (session?.user as any).id,
+          date: {
+            gte: new Date(),
+          },
+        },
+        include: {
+          service: true,
+          barbershop: true,
+        },
+        orderBy: {
+          date: "asc",
+        },
+      })
+    : [];
+
   const barbershops: Barbershop[] = await db.barbershop.findMany({
     where: {
       recommended: true,
@@ -26,15 +48,28 @@ const SearchSection = async () => {
     <section className=" bg-[url('/capa.png')] bg-cover bg-center bg-no-repeat px-5 py-10">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-around gap-5">
         <div className="flex w-full max-w-sm flex-col gap-y-5">
-          <WelcomeMessage/>
+          <WelcomeMessage />
 
           <Search />
 
-          <div className="flex flex-col gap-y-2">
+          <div className="flex flex-col items-center justify-center">
             <h2 className="flex items-center gap-2 text-sm font-semibold uppercase text-neutral-300">
-              Agendamentos <MdOutlineBookmarkAdded size={25} />
+              Seus agendamentos <MdOutlineBookmarkAdded size={25} />
             </h2>
-            {/* <BookingItem /> */}
+
+            <Carousel className="mx-auto w-full max-w-2xl px-5 py-5">
+              <CarouselContent>
+                {confirmedBookings.map((booking: any) => (
+                  <CarouselItem key={booking.id}>
+                    <BookingItem key={booking.id} booking={booking} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="hidden xl:block">
+                <CarouselPrevious />
+                <CarouselNext />
+              </div>
+            </Carousel>
           </div>
         </div>
 
