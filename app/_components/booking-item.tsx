@@ -20,14 +20,18 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "./ui/drawer";
+
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/dialog";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
 
 import { Button } from "./ui/button";
 import { cancelBooking } from "../_actions/cancel-booking";
@@ -44,7 +48,6 @@ interface BookingItemProps {
 }
 
 const BookingItem = ({ booking }: BookingItemProps) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [cancelIsLoading, setCancelIsLoading] = useState(false);
 
@@ -52,7 +55,6 @@ const BookingItem = ({ booking }: BookingItemProps) => {
     try {
       setCancelIsLoading(true);
       await cancelBooking(booking.id);
-      setModalIsOpen(false);
       setDrawerIsOpen(false);
       toast.success("Reserva removida com sucesso!");
     } catch (error) {
@@ -60,10 +62,6 @@ const BookingItem = ({ booking }: BookingItemProps) => {
     } finally {
       setCancelIsLoading(false);
     }
-  };
-
-  const handleBackModalButton = () => {
-    setModalIsOpen(false);
   };
 
   return (
@@ -214,61 +212,53 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               </Button>
             </DrawerClose>
 
-            <Dialog open={modalIsOpen} onOpenChange={setModalIsOpen}>
-              <DialogTrigger asChild>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
                 <Button className="w-full text-white" variant={"default"}>
                   {isPast(booking.date)
                     ? "Apagar do histórico"
                     : "Cancelar agendamento"}{" "}
                   <LuCalendarX2 size={25} className="ml-2" />
                 </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle className="text-center">
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-base">
                     Tem certeza que deseja{" "}
                     {isPast(booking.date) ? "remover" : "cancelar"} esse
                     agendamento?
-                  </DialogTitle>
-                  <DialogDescription>
-                    <p className="my-5 text-center text-sm">
-                      Esta ação não pode ser desfeita!
-                    </p>
-
-                    <div className="flex w-full items-center justify-center gap-4">
-                      <Button
-                        onClick={handleBackModalButton}
-                        variant="outline"
-                        className="w-fit"
-                      >
-                        <IoReturnDownBack size={25} className="mr-2" /> Voltar
-                      </Button>
-
-                      <Button
-                        onClick={handleCancelClick}
-                        className="w-full text-white"
-                        variant={"destructive"}
-                        disabled={cancelIsLoading}
-                      >
-                        {cancelIsLoading ? (
-                          <span className="flex items-center gap-4">
-                            <ClipLoader color="#fff" size={20} />{" "}
-                            {isPast(booking.date) ? "Removendo" : "Cancelando"}{" "}
-                            reserva...
-                          </span>
-                        ) : (
-                          <span className="flex items-center gap-4">
-                            Confirmar{" "}
-                            {isPast(booking.date) ? "remoção" : "cancelamento"}
-                            <LuCalendarX2 size={25} className="ml-2" />
-                          </span>
-                        )}
-                      </Button>
-                    </div>
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    <p className="text-sm">Esta ação não pode ser desfeita!</p>
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="flex flex-col gap-4 md:flex-row">
+                  <AlertDialogCancel>Voltar</AlertDialogCancel>
+                  <AlertDialogAction asChild>
+                    <Button
+                      onClick={handleCancelClick}
+                      className="w-full text-white"
+                      variant={"destructive"}
+                      disabled={cancelIsLoading}
+                    >
+                      {cancelIsLoading ? (
+                        <span className="flex items-center gap-4">
+                          <ClipLoader color="#fff" size={20} />{" "}
+                          {isPast(booking.date) ? "Removendo" : "Cancelando"}{" "}
+                          reserva...
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-4">
+                          Confirmar{" "}
+                          {isPast(booking.date) ? "remoção" : "cancelamento"}
+                          <LuCalendarX2 size={25} className="ml-2" />
+                        </span>
+                      )}
+                    </Button>
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </DrawerFooter>
       </DrawerContent>
