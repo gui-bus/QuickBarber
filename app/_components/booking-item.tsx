@@ -216,7 +216,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
 
             <Dialog open={modalIsOpen} onOpenChange={setModalIsOpen}>
               <DialogTrigger asChild>
-                <Button className="w-full text-white" variant={"destructive"}>
+                <Button className="w-full text-white" variant={"default"}>
                   {isPast(booking.date)
                     ? "Apagar do histórico"
                     : "Cancelar agendamento"}{" "}
