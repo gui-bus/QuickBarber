@@ -2,7 +2,6 @@ import Search from "../(home)/_components/search";
 import BookingItem from "../_components/booking-item";
 import { MdOutlineBookmarkAdded } from "react-icons/md";
 
-import { Barbershop } from "@prisma/client";
 import { db } from "../_lib/prisma";
 import { BsStars } from "react-icons/bs";
 import {
@@ -16,6 +15,7 @@ import BarbershopItem from "../(home)/_components/barbershop-item";
 import WelcomeMessage from "../(home)/_components/welcome-message";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
+import { Card, CardContent } from "../_components/ui/card";
 
 const SearchSection = async () => {
   const session = await getServerSession(authOptions);
@@ -53,25 +53,37 @@ const SearchSection = async () => {
 
           <Search />
 
-          <div className="flex flex-col items-center justify-center">
-            <h2 className="flex items-center gap-2 text-sm font-semibold uppercase text-neutral-300">
-              Seus agendamentos <MdOutlineBookmarkAdded size={25} />
-            </h2>
+          {session?.user && (
+            <div className="flex flex-col items-center justify-center">
+              <h2 className="flex items-center gap-2 text-sm font-semibold uppercase text-neutral-300">
+                Seus agendamentos <MdOutlineBookmarkAdded size={25} />
+              </h2>
 
-            <Carousel className="mx-auto w-full max-w-2xl px-5 py-5">
-              <CarouselContent>
-                {confirmedBookings.map((booking: any) => (
-                  <CarouselItem key={booking.id}>
-                    <BookingItem key={booking.id} booking={booking} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <div className="hidden xl:block">
-                <CarouselPrevious />
-                <CarouselNext />
-              </div>
-            </Carousel>
-          </div>
+              {confirmedBookings.length > 0 ? (
+                <Carousel className="mx-auto w-full max-w-2xl px-5 py-5">
+                  <CarouselContent>
+                    {confirmedBookings.map((booking: any) => (
+                      <CarouselItem key={booking.id}>
+                        <BookingItem key={booking.id} booking={booking} />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <div className="hidden xl:block">
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </div>
+                </Carousel>
+              ) : (
+                <Card className="mt-5">
+                  <CardContent className="p-5">
+                    <h4 className="text-xs">
+                      Você ainda não possui nenhum agendamento
+                    </h4>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="mt-6 hidden select-none flex-col items-center justify-center gap-y-2 lg:flex">
