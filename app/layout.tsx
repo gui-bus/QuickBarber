@@ -4,7 +4,8 @@ import "./globals.css";
 import Footer from "./_components/footer";
 import Header from "./_components/header";
 import AuthProvider from "./_providers/auth";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "./_components/ui/sonner";
+
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -23,7 +24,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${montserrat.className} dark`}>
         <AuthProvider>
-          <Toaster position="top-center" reverseOrder={false} />
+          <Toaster position="top-center"/>
           <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-grow">{children}</main>
