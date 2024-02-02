@@ -221,7 +221,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                   <LuCalendarX2 size={25} className="ml-2" />
                 </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent>
+              <AlertDialogContent className="w-[90%] rounded-xl">
                 <AlertDialogHeader>
                   <AlertDialogTitle className="text-base">
                     Tem certeza que deseja{" "}
