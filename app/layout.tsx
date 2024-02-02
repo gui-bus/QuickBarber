@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${montserrat.className} dark`}>
         <AuthProvider>
-          <Toaster position="top-center"/>
+          <Toaster/>
           <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-grow">{children}</main>
