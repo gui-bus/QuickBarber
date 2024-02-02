@@ -17,8 +17,12 @@ import { Calendar } from "@/app/_components/ui/calendar";
 import { useMemo, useState } from "react";
 import { ptBR } from "date-fns/locale";
 import { generateDayTimeList } from "../_helpers/hours";
-import { format } from "date-fns";
+import { format, setHours, setMinutes } from "date-fns";
 import { IoMdCheckboxOutline } from "react-icons/io";
+import { saveBooking } from "../_actions/save-booking";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
 
 interface ServiceItemProps {
   barbershop: Barbershop;
@@ -31,8 +35,10 @@ const ServiceItem = ({
   isAuthenticated,
   barbershop,
 }: ServiceItemProps) => {
+  const { data } = useSession();
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [hour, setHour] = useState<string | undefined>();
+  const [submitIsLoading, setSubmitIsLoading] = useState(false);
 
   const handleDateClick = (date: Date | undefined) => {
     setDate(date);
@@ -45,6 +51,40 @@ const ServiceItem = ({
   const timeList = useMemo(() => {
     return date ? generateDayTimeList(date) : [];
   }, [date]);
+
+  const handleBookingSubmit = async () => {
+    setSubmitIsLoading(true);
+    try {
+      if (!hour || !date || !data?.user) {
+        return;
+      }
+
+      const dateHour = Number(hour.split(":")[0]);
+      const dateMinutes = Number(hour.split(":")[1]);
+      const newDate = setMinutes(setHours(date, dateHour), dateMinutes);
+
+      await saveBooking({
+        serviceId: service.id,
+        barbershopId: barbershop.id,
+        date: newDate,
+        userId: (data.user as any).id,
+      });
+
+      return toast.success("Reserva criada com sucesso!", {
+        style: {
+          fontSize: "12px",
+        },
+      });
+    } catch (error) {
+      return toast.error("Ocorreu um erro ao criar sua reserva!", {
+        style: {
+          fontSize: "12px",
+        },
+      });
+    } finally {
+      setSubmitIsLoading(false);
+    }
+  };
 
   return (
     <Card>
@@ -106,7 +146,7 @@ const ServiceItem = ({
                     </div>
 
                     {date && (
-                      <div className="grid grid-cols-5 xl:grid-cols-3 gap-2 px-5 pb-5 pt-4">
+                      <div className="grid grid-cols-5 gap-2 px-5 pb-5 pt-4 xl:grid-cols-3">
                         {timeList.map((time) => (
                           <Button
                             key={time}
@@ -182,8 +222,21 @@ const ServiceItem = ({
                   </div>
 
                   <SheetFooter className="p-5">
-                    <Button className="flex w-full items-center gap-4 text-white" disabled={!hour || !date}>
-                      Confirmar reserva <IoMdCheckboxOutline size={25} />
+                    <Button
+                      className=" text-white"
+                      disabled={!hour || !date || submitIsLoading}
+                      onClick={handleBookingSubmit}
+                    >
+                      {submitIsLoading ? (
+                        <span className="flex items-center gap-4">
+                          <ClipLoader color="#fff" size={20} /> Criando
+                          reserva...
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-4">
+                          Confirmar reserva <IoMdCheckboxOutline size={25} />
+                        </span>
+                      )}
                     </Button>
                   </SheetFooter>
                 </SheetContent>
