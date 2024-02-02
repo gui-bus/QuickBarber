@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent } from "@/app/_components/ui/card";
-import { Barbershop, Service } from "@prisma/client";
+import { Barbershop, Booking, Service } from "@prisma/client";
 import Image from "next/image";
 
 import {
@@ -14,7 +14,7 @@ import {
 } from "@/app/_components/ui/sheet";
 import { Separator } from "@/app/_components/ui/separator";
 import { Calendar } from "@/app/_components/ui/calendar";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ptBR } from "date-fns/locale";
 import { generateDayTimeList } from "../_helpers/hours";
 import { format, setHours, setMinutes } from "date-fns";
@@ -24,6 +24,7 @@ import { useSession } from "next-auth/react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { getDayBookings } from "../_actions/get-day-bookings";
 
 interface ServiceItemProps {
   barbershop: Barbershop;
@@ -42,6 +43,20 @@ const ServiceItem = ({
   const [hour, setHour] = useState<string | undefined>();
   const [submitIsLoading, setSubmitIsLoading] = useState(false);
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
+  const [dayBookings, setDayBookings] = useState<Booking[]>([]);
+
+  useEffect(() => {
+    if (!date) {
+      return;
+    }
+
+    const refreshAvailableHours = async () => {
+      const _dayBookings = await getDayBookings(barbershop.id, date);
+      setDayBookings(_dayBookings);
+    };
+
+    refreshAvailableHours();
+  }, [date, barbershop.id]);
 
   const handleDateClick = (date: Date | undefined) => {
     setDate(date);
@@ -52,8 +67,28 @@ const ServiceItem = ({
     setHour(time);
   };
   const timeList = useMemo(() => {
-    return date ? generateDayTimeList(date) : [];
-  }, [date]);
+    if (!date) {
+      return [];
+    }
+
+    return generateDayTimeList(date).filter((time) => {
+      const timeHour = Number(time.split(":")[0]);
+      const timeMinutes = Number(time.split(":")[1]);
+
+      const booking = dayBookings.find((booking) => {
+        const bookingHour = booking.date.getHours();
+        const bookingMinutes = booking.date.getMinutes();
+
+        return bookingHour === timeHour && bookingMinutes === timeMinutes;
+      });
+
+      if (!booking) {
+        return true;
+      }
+
+      return false;
+    });
+  }, [date, dayBookings]);
 
   const handleBookingSubmit = async () => {
     setSubmitIsLoading(true);
@@ -90,7 +125,6 @@ const ServiceItem = ({
           onClick: () => router.push("/bookings"),
         },
       });
-
     } catch (error) {
       return toast.error("Ocorreu um erro ao criar sua reserva!", {
         style: {
@@ -224,22 +258,13 @@ const ServiceItem = ({
                             <p className="w-1/2 text-end text-sm">{hour}</p>
                           </div>
                         )}
-
-                        {/* <div className="flex w-full justify-between gap-5">
-                          <h4 className="w-1/2 text-sm text-muted-foreground">
-                            Barbearia
-                          </h4>
-                          <p className="w-1/2 truncate text-end text-sm">
-                            {barbershop.name}
-                          </p>
-                        </div> */}
                       </CardContent>
                     </Card>
                   </div>
 
                   <SheetFooter className="p-5">
                     <Button
-                      className=" text-white w-full"
+                      className=" w-full text-white"
                       disabled={!hour || !date || submitIsLoading}
                       onClick={handleBookingSubmit}
                     >
