@@ -30,6 +30,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Separator } from "./ui/separator";
 import { ClipLoader } from "react-spinners";
+import Search from "../(home)/_components/search";
 
 const Header = () => {
   const { data, status } = useSession();
@@ -57,19 +58,15 @@ const Header = () => {
           />
         </Link>
 
+        <div className="hidden lg:block w-full max-w-xl">
+          <Search />
+        </div>
+
         {status === "loading" ? (
           <ClipLoader color="#3B82F6" size={20} />
         ) : (
           <div>
             <div className="hidden items-center justify-center gap-4 md:flex">
-              {data?.user && status === "authenticated" && (
-                <Button variant={"ghost"} asChild>
-                  <Link href="/bookings">
-                    Agendamentos{" "}
-                    <IoCalendarOutline className="ml-2" size={20} />
-                  </Link>
-                </Button>
-              )}
               {!data?.user && status === "unauthenticated" ? (
                 <Button
                   onClick={handleLoginClick}
@@ -96,6 +93,16 @@ const Header = () => {
                       {data?.user?.email}
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                    {data?.user && status === "authenticated" && (
+                      <DropdownMenuItem>
+                        <Button variant={"default"} asChild>
+                          <Link href="/bookings" className="text-white">
+                            Agendamentos{" "}
+                            <IoCalendarOutline className="ml-2" size={20} />
+                          </Link>
+                        </Button>
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem>
                       <Button
                         onClick={handleLogoutClick}
@@ -146,7 +153,7 @@ const Header = () => {
                         <Button
                           onClick={handleLoginClick}
                           variant={"default"}
-                          className="flex items-center justify-center gap-2 text-white w-full mt-4"
+                          className="mt-4 flex w-full items-center justify-center gap-2 text-white"
                         >
                           Login <ImEnter size={20} />
                         </Button>
