@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+
 import { redirect } from "next/navigation";
 import { IoCalendarOutline } from "react-icons/io5";
 import BookingItem from "../_components/booking-item";
@@ -7,8 +7,8 @@ import { db } from "../_lib/prisma";
 import { Booking } from "@prisma/client";
 import { Separator } from "../_components/ui/separator";
 import { IoCheckmarkDone, IoCheckmark } from "react-icons/io5";
-import { isFuture, isPast } from "date-fns";
 import { Card, CardContent } from "../_components/ui/card";
+import { authOptions } from "../_lib/auth";
 
 const BookingsPage = async () => {
   const session = await getServerSession(authOptions);

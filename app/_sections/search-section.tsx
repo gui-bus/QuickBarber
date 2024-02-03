@@ -14,8 +14,9 @@ import {
 import BarbershopItem from "../(home)/_components/barbershop-item";
 import WelcomeMessage from "../(home)/_components/welcome-message";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+
 import { Card, CardContent } from "../_components/ui/card";
+import { authOptions } from "../_lib/auth";
 
 const SearchSection = async () => {
   const session = await getServerSession(authOptions);
