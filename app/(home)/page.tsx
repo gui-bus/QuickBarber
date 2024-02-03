@@ -29,6 +29,10 @@ export default async function Home() {
 
   return (
     <main className="select-none">
+      <div className="hidden md:block">
+        <AboutSection />
+      </div>
+
       <SearchSection />
 
       <div className="mt-6 flex select-none flex-col items-center justify-center gap-y-2 lg:hidden">
@@ -79,10 +83,6 @@ export default async function Home() {
             <CarouselNext />
           </div>
         </Carousel>
-      </div>
-
-      <div className="hidden md:block">
-        <AboutSection />
       </div>
     </main>
   );
