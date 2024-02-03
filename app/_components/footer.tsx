@@ -77,7 +77,7 @@ export default function Footer() {
           />
         </Link>
 
-        <p className="text-sm">
+        <p className="text-sm text-center">
           &copy; {currentYear} QUICK BARBER - Todos os direitos reservados.
         </p>
 
