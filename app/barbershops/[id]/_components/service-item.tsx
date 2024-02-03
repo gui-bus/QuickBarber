@@ -17,7 +17,7 @@ import { Calendar } from "@/app/_components/ui/calendar";
 import { useEffect, useMemo, useState } from "react";
 import { ptBR } from "date-fns/locale";
 import { generateDayTimeList } from "../_helpers/hours";
-import { format, setHours, setMinutes } from "date-fns";
+import { addDays, format, setHours, setMinutes } from "date-fns";
 import { IoMdCheckboxOutline } from "react-icons/io";
 import { saveBooking } from "../_actions/save-booking";
 import { useSession } from "next-auth/react";
@@ -183,7 +183,7 @@ const ServiceItem = ({
                         selected={date}
                         onSelect={handleDateClick}
                         locale={ptBR}
-                        fromDate={new Date()}
+                        fromDate={addDays(new Date(), 1)}
                         styles={{
                           head_cell: {
                             textTransform: "capitalize",
