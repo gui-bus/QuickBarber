@@ -52,12 +52,12 @@ const BookingsPage = async () => {
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 p-5">
-      <h1 className="flex items-center gap-2 text-xl font-semibold uppercase text-neutral-300">
+      <h1 className="flex items-center gap-2 text-xl font-semibold uppercase dark:text-white">
         Agendamentos <IoCalendarOutline size={25} />
       </h1>
 
       <div className="flex flex-col gap-y-2 py-2">
-        <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase text-muted-foreground">
+        <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase dark:text-muted-foreground">
           Confirmados <IoCheckmark size={25} />
         </h2>
         {confirmedBookings.length > 0 ? (
@@ -80,7 +80,7 @@ const BookingsPage = async () => {
       <Separator />
 
       <div className="flex flex-col gap-y-2 py-2">
-        <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase text-muted-foreground">
+        <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase dark:text-muted-foreground">
           Finalizados <IoCheckmarkDone size={25} />
         </h2>
         {finishedBookings.length > 0 ? (

@@ -74,7 +74,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
             <div className="flex items-center justify-around">
               <div className="flex flex-col gap-y-3">
                 <Badge
-                  className={`w-fit ${isPast(booking.date) ? "text-white" : "text-white"}`}
+                  className={`w-fit ${isPast(booking.date) ? "dark:text-white" : "dark:text-white"}`}
                   variant={isPast(booking.date) ? "outline" : "default"}
                 >
                   {isPast(booking.date) ? "Finalizado" : "Confirmado"}
@@ -146,7 +146,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                       Status
                     </h4>
                     <Badge
-                      className={`flex w-fit items-start ${isPast(booking.date) ? "text-white" : "text-white"}`}
+                      className={`flex w-fit items-start ${isPast(booking.date) ? "dark:text-white" : "dark:text-white"}`}
                       variant={isPast(booking.date) ? "outline" : "default"}
                     >
                       {isPast(booking.date) ? "Finalizado" : "Confirmado"}
