@@ -17,7 +17,7 @@ import { ImEnter, ImExit } from "react-icons/im";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { IoCalendarOutline } from "react-icons/io5";
-import { HiScissors } from "react-icons/hi";
+import { HiMoon, HiScissors, HiSun } from "react-icons/hi";
 import { RiPagesLine } from "react-icons/ri";
 import { FaUser } from "react-icons/fa6";
 import {
@@ -31,9 +31,15 @@ import {
 import { Separator } from "./ui/separator";
 import { ClipLoader } from "react-spinners";
 import Search from "../(home)/_components/search";
+import { useTheme } from "next-themes";
 
 const Header = () => {
+  const { setTheme, theme } = useTheme();
   const { data, status } = useSession();
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   const handleLoginClick = async () => {
     await signIn("google");
@@ -45,11 +51,11 @@ const Header = () => {
 
   return (
     <header>
-      <Card>
+      <Card className="border-b-primary">
         <CardContent className="mx-auto flex w-full max-w-7xl items-center justify-around p-3">
           <Link href="/">
             <Image
-              src="/logo.png"
+              src={theme === "dark" ? "/logo.png" : "/logoBlack.png"}
               alt="Quick Barber"
               height={0}
               width={0}
@@ -69,56 +75,84 @@ const Header = () => {
             <div>
               <div className="hidden items-center justify-center gap-4 md:flex">
                 {!data?.user && status === "unauthenticated" ? (
-                  <Button
-                    onClick={handleLoginClick}
-                    variant={"default"}
-                    className="flex items-center justify-center gap-2 text-white"
-                  >
-                    Login <ImEnter size={20} />
-                  </Button>
+                  <div className="flex items-center gap-5">
+                    <Button variant="ghost" onClick={toggleTheme} size={"icon"}>
+                      {theme === "dark" ? (
+                        <HiSun size={20} className="text-white" />
+                      ) : (
+                        <HiMoon size={20} />
+                      )}
+                    </Button>
+
+                    <Button
+                      onClick={handleLoginClick}
+                      variant={"default"}
+                      className="flex items-center justify-center gap-2 text-white"
+                    >
+                      Login <ImEnter size={20} />
+                    </Button>
+                  </div>
                 ) : (
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <div className="flex cursor-pointer items-center gap-4">
-                        <Avatar className="h-9 w-9 select-none">
-                          <AvatarImage src={data?.user?.image as string} />
-                          <AvatarFallback>
-                            <FaUser />
-                          </AvatarFallback>
-                        </Avatar>
-                        <p className="text-sm">{data?.user?.name}</p>
-                      </div>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuLabel className="text-sm font-light text-muted-foreground">
-                        {data?.user?.email}
-                      </DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      {data?.user && status === "authenticated" && (
+                  <div className="flex items-center gap-5">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <div className="flex cursor-pointer items-center gap-4">
+                          <Avatar className="h-12 w-12 select-none border-2 border-primary">
+                            <AvatarImage src={data?.user?.image as string} />
+                            <AvatarFallback>
+                              <FaUser />
+                            </AvatarFallback>
+                          </Avatar>
+                          <p className="text-sm">{data?.user?.name}</p>
+                        </div>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuLabel className="text-sm font-light text-muted-foreground">
+                          {data?.user?.email}
+                        </DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {data?.user && status === "authenticated" && (
+                          <DropdownMenuItem>
+                            <Button variant={"default"} asChild>
+                              <Link href="/bookings" className="text-white">
+                                Agendamentos{" "}
+                                <IoCalendarOutline className="ml-2" size={20} />
+                              </Link>
+                            </Button>
+                          </DropdownMenuItem>
+                        )}
                         <DropdownMenuItem>
-                          <Button variant={"default"} asChild>
-                            <Link href="/bookings" className="text-white">
-                              Agendamentos{" "}
-                              <IoCalendarOutline className="ml-2" size={20} />
-                            </Link>
+                          <Button
+                            onClick={handleLogoutClick}
+                            variant={"default"}
+                            className="flex w-full items-center justify-center gap-2 text-white"
+                          >
+                            Logout <ImExit size={20} />
                           </Button>
                         </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    <Button variant="ghost" onClick={toggleTheme} size={"icon"}>
+                      {theme === "dark" ? (
+                        <HiSun size={20} className="text-white" />
+                      ) : (
+                        <HiMoon size={20} />
                       )}
-                      <DropdownMenuItem>
-                        <Button
-                          onClick={handleLogoutClick}
-                          variant={"default"}
-                          className="flex w-full items-center justify-center gap-2 text-white"
-                        >
-                          Logout <ImExit size={20} />
-                        </Button>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                    </Button>
+                  </div>
                 )}
               </div>
 
-              <div className="md:hidden">
+              <div className="flex items-center gap-5 md:hidden">
+                <Button variant="ghost" onClick={toggleTheme} size={"icon"}>
+                  {theme === "dark" ? (
+                    <HiSun size={20} className="text-white" />
+                  ) : (
+                    <HiMoon size={20} />
+                  )}
+                </Button>
+
                 <Sheet>
                   <SheetTrigger asChild>
                     <Button variant={"outline"} size={"icon"}>
@@ -131,7 +165,7 @@ const Header = () => {
                       <SheetDescription className="flex flex-col items-center justify-center">
                         <Separator className="my-2" />
                         {status === "authenticated" ? (
-                          <Card className="mt-5 bg-[url('/capa.png')] bg-cover bg-center bg-no-repeat">
+                          <Card className="mt-5 flex w-full items-center justify-center bg-[url('/capa.png')] bg-cover bg-center bg-no-repeat">
                             <CardHeader className="flex flex-col gap-2">
                               <div className="flex cursor-pointer items-center gap-4">
                                 <Avatar className="select-none">
@@ -142,10 +176,12 @@ const Header = () => {
                                     <FaUser />
                                   </AvatarFallback>
                                 </Avatar>
-                                <p className="text-sm">{data?.user?.name}</p>
+                                <p className="text-sm text-white">
+                                  {data?.user?.name}
+                                </p>
                               </div>
 
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-sm text-white/70 dark:text-muted-foreground">
                                 {data?.user?.email}
                               </p>
                             </CardHeader>
@@ -154,7 +190,7 @@ const Header = () => {
                           <Button
                             onClick={handleLoginClick}
                             variant={"default"}
-                            className="mt-4 flex w-full items-center justify-center gap-2 text-white"
+                            className="mt-4 flex w-full items-center justify-center gap-2 dark:text-white"
                           >
                             Login <ImEnter size={20} />
                           </Button>
@@ -165,7 +201,7 @@ const Header = () => {
                         <div className="flex w-full flex-col gap-2">
                           <Button
                             variant={"outline"}
-                            className=" text-white"
+                            className=" dark:text-white"
                             asChild
                           >
                             <Link
@@ -178,7 +214,7 @@ const Header = () => {
 
                           <Button
                             variant={"outline"}
-                            className=" text-white"
+                            className=" dark:text-white"
                             asChild
                           >
                             <Link
@@ -193,7 +229,7 @@ const Header = () => {
                             <Button
                               onClick={handleLogoutClick}
                               variant={"outline"}
-                              className="flex items-center justify-center gap-2 text-white"
+                              className="flex items-center justify-center gap-2 dark:text-white"
                             >
                               Logout <ImExit size={20} />
                             </Button>

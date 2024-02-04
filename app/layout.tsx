@@ -5,7 +5,7 @@ import Footer from "./_components/footer";
 import Header from "./_components/header";
 import AuthProvider from "./_providers/auth";
 import { Toaster } from "./_components/ui/sonner";
-
+import { ThemeProvider } from "./_providers/theme-provider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -22,15 +22,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${montserrat.className} dark`}>
-        <AuthProvider>
-          <Toaster/>
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-          </div>
-        </AuthProvider>
+      <body className={`${montserrat.className}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>
+            <Toaster />
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-grow">{children}</main>
+              <Footer />
+            </div>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
