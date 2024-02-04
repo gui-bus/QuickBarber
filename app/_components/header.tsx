@@ -57,7 +57,7 @@ const Header = () => {
 
   return (
     <header>
-      <Card className="border-b-primary">
+      <Card className="border-b-primary rounded-b-none">
         <CardContent className="mx-auto flex w-full max-w-7xl items-center justify-around p-3">
           <Link href="/">
             <div className="flex items-center gap-2">
