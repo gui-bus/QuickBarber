@@ -202,7 +202,7 @@ const ServiceItem = ({
                             key={time}
                             variant={hour === time ? "default" : "outline"}
                             size={"sm"}
-                            className="rounded-full text-white"
+                            className="rounded-full dark:text-white"
                             onClick={() => handleHourClick(time)}
                           >
                             {time}

@@ -49,7 +49,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
             alt={barbershop.name}
             fill
             sizes="100vw"
-            className="object-cover opacity-70"
+            className="object-cover dark:opacity-70"
           />
         </div>
 
@@ -99,7 +99,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
               <Card>
                 <CardContent className="flex items-center justify-center gap-2 p-5">
                   <p className="flex items-center gap-2 text-xl font-bold">
-                    <FaStar size={30} className="text-primary" />
+                    <FaStar size={30} className="text-yellow-600" />
                     {barbershop.rating.toString()}
                   </p>
                   <p className="line-clamp-1 truncate text-sm">
@@ -167,29 +167,6 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
                       </div>
                     </CardContent>
                   </Card>
-
-                  {/* <div className="flex w-full flex-col gap-5 lg:w-fit">
-                    <Card>
-                      <CardHeader className="flex items-center justify-center text-center">
-                        Horário de Funcionamento
-                      </CardHeader>
-                      <Separator />
-                      <CardContent className="flex flex-col gap-5 p-5">
-                        <div className="flex flex-col gap-y-3">
-                          {barbershop.openings.map(
-                            (booking: string, index: any) => (
-                              <div
-                                className="flex w-full items-center justify-center gap-2 whitespace-nowrap"
-                                key={index}
-                              >
-                                <p className="text-xs">{booking}</p>
-                              </div>
-                            ),
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div> */}
                 </div>
               </TabsContent>
             </Tabs>
@@ -231,29 +208,6 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* <div className="flex w-full flex-col gap-5 lg:w-fit">
-                <Card>
-                  <CardHeader className="flex items-center justify-center text-center">
-                    Horário de Funcionamento
-                  </CardHeader>
-                  <Separator />
-                  <CardContent className="flex flex-col gap-5 p-5">
-                    <div className="flex flex-col gap-y-3">
-                      {barbershop.openings.map(
-                        (booking: string, index: any) => (
-                          <div
-                            className="flex w-full items-center justify-center gap-2 whitespace-nowrap"
-                            key={index}
-                          >
-                            <p className="text-xs">{booking}</p>
-                          </div>
-                        ),
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div> */}
             </div>
           </div>
         </div>
