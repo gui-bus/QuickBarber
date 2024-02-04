@@ -1,3 +1,4 @@
+'use client'
 import React, { ReactNode } from "react";
 import Image from "next/image";
 import {
@@ -5,10 +6,11 @@ import {
   FaGithub,
   FaLinkedinIn,
   FaChevronRight,
-  FaSitemap
+  FaSitemap,
 } from "react-icons/fa6";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { useTheme } from "next-themes";
 
 type ButtonSize = "sm" | "md" | "lg" | undefined;
 
@@ -47,6 +49,7 @@ function FooterLink({ text }: FooterLinkProps) {
 }
 
 export default function Footer() {
+  const { theme } = useTheme();
   const currentYear = new Date().getFullYear();
 
   const departments = [
@@ -64,11 +67,11 @@ export default function Footer() {
   const helps = ["Como agendar", "Central de ajuda", "Perguntas Frequentes"];
 
   return (
-    <footer className="mx-auto w-full cursor-default items-center justify-center bg-white pt-8 shadow-xl dark:border-t dark:border-primary dark:bg-[#181717] md:px-0">
+    <footer className="mx-auto w-full cursor-default items-center justify-center border-t border-neutral-900 dark:border-primary bg-white pt-8 shadow-xl dark:bg-[#181717] md:px-0">
       <section className="flex flex-col items-center justify-around gap-y-4 px-4 pb-8 shadow-xl md:flex-row md:gap-y-0">
         <Link href="/">
           <Image
-            src="/logo.png"
+            src={theme === "dark" ? "/logo.png" : "/logoBlack.png"}
             alt="QUICK BARBER"
             width={200}
             height={50}
@@ -77,7 +80,7 @@ export default function Footer() {
           />
         </Link>
 
-        <p className="text-sm text-center">
+        <p className="text-center text-sm">
           &copy; {currentYear} QUICK BARBER - Todos os direitos reservados.
         </p>
 
