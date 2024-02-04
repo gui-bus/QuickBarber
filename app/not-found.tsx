@@ -6,9 +6,9 @@ import Link from "next/link";
 
 const ErrorPage = () => {
   return (
-    <div className="flex min-h-screen w-full flex-grow flex-col items-center justify-center bg-[url('/capa.png')] bg-cover bg-center bg-no-repeat px-5">
+    <div className="flex min-h-screen w-full flex-grow flex-col items-center justify-center bg-[url('/capa.png')] bg-cover bg-center bg-no-repeat px-5 text-white">
       <div className="flex flex-col items-center justify-center gap-5 text-center">
-        <span className="text-7xl font-black text-white/50 opacity-70">
+        <span className="text-7xl font-black text-white dark:text-white/50 opacity-70">
           404
         </span>
 
