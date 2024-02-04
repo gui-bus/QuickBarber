@@ -70,14 +70,26 @@ export default function Footer() {
     <footer className="mx-auto w-full cursor-default items-center justify-center border-t border-neutral-900 dark:border-primary bg-white pt-8 shadow-xl dark:bg-[#181717] md:px-0">
       <section className="flex flex-col items-center justify-around gap-y-4 px-4 pb-8 shadow-xl md:flex-row md:gap-y-0">
         <Link href="/">
-          <Image
-            src={theme === "dark" ? "/logo.png" : "/logoBlack.png"}
-            alt="QUICK BARBER"
-            width={200}
-            height={50}
-            style={{ objectFit: "contain" }}
-            className="h-auto w-52"
-          />
+        <div className="flex items-center gap-2">
+              <Image
+                src="/icon.png"
+                alt="Quick Barber"
+                height={0}
+                width={0}
+                sizes="100vw"
+                priority
+                className="h-auto w-14 object-cover"
+              />
+
+              <div className="flex flex-col items-center">
+                <p className="text-xl font-black text-black dark:text-white">
+                  QUICK
+                </p>
+                <p className="-mt-2 font-light text-black dark:text-white">
+                  BARBER
+                </p>
+              </div>
+            </div>
         </Link>
 
         <p className="text-center text-sm">
