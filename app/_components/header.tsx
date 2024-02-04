@@ -32,13 +32,19 @@ import { Separator } from "./ui/separator";
 import { ClipLoader } from "react-spinners";
 import Search from "../(home)/_components/search";
 import { useTheme } from "next-themes";
+import { useState } from "react";
 
 const Header = () => {
   const { setTheme, theme } = useTheme();
   const { data, status } = useSession();
+  const [sheetIsOpen, setSheetIsOpen] = useState(false);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
+  };
+
+  const sheetButtonClick = () => {
+    setSheetIsOpen(false);
   };
 
   const handleLoginClick = async () => {
@@ -153,7 +159,7 @@ const Header = () => {
                   )}
                 </Button>
 
-                <Sheet>
+                <Sheet open={sheetIsOpen} onOpenChange={setSheetIsOpen}>
                   <SheetTrigger asChild>
                     <Button variant={"outline"} size={"icon"}>
                       <MenuIcon />
@@ -203,6 +209,7 @@ const Header = () => {
                             variant={"outline"}
                             className=" dark:text-white"
                             asChild
+                            onClick={sheetButtonClick}
                           >
                             <Link
                               href="/"
@@ -216,6 +223,7 @@ const Header = () => {
                             variant={"outline"}
                             className=" dark:text-white"
                             asChild
+                            onClick={sheetButtonClick}
                           >
                             <Link
                               href="/bookings"
