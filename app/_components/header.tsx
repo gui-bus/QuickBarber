@@ -60,15 +60,26 @@ const Header = () => {
       <Card className="border-b-primary">
         <CardContent className="mx-auto flex w-full max-w-7xl items-center justify-around p-3">
           <Link href="/">
-            <Image
-              src={theme === "dark" ? "/logo.png" : "/logoBlack.png"}
-              alt="Quick Barber"
-              height={0}
-              width={0}
-              sizes="100vw"
-              priority
-              className="h-auto w-32 object-cover"
-            />
+            <div className="flex items-center gap-2">
+              <Image
+                src="/icon.png"
+                alt="Quick Barber"
+                height={0}
+                width={0}
+                sizes="100vw"
+                priority
+                className="h-auto w-14 object-cover"
+              />
+
+              <div className="flex flex-col items-center">
+                <p className="text-xl font-black text-black dark:text-white">
+                  QUICK
+                </p>
+                <p className="-mt-2 font-light text-black dark:text-white">
+                  BARBER
+                </p>
+              </div>
+            </div>
           </Link>
 
           <div className="hidden w-full max-w-xl lg:block">
