@@ -234,7 +234,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                     </p>
                   </AlertDialogDescription>
                 </AlertDialogHeader>
-                <AlertDialogFooter className="flex flex-col md:flex-row">
+                <AlertDialogFooter className="flex flex-col md:flex-row gap-4">
                   <AlertDialogCancel className="w-full">
                     Voltar
                   </AlertDialogCancel>
