@@ -56,7 +56,7 @@ const SearchSection = async () => {
 
           {session?.user && (
             <div className="flex flex-col items-center justify-center">
-              <h2 className="flex items-center gap-2 text-sm font-semibold uppercase text-neutral-300">
+              <h2 className="flex items-center gap-2 text-sm font-semibold uppercase text-white dark:text-white/70">
                 Seus agendamentos <MdOutlineBookmarkAdded size={25} />
               </h2>
 

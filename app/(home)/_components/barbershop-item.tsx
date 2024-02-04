@@ -7,8 +7,10 @@ import { FaStar } from "react-icons/fa6";
 import { Barbershop } from "@prisma/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 
 const BarbershopItem = ({ barbershop }: Barbershop) => {
+  const { setTheme, theme } = useTheme();
   const router = useRouter();
 
   const handleBookingClick = () => {
@@ -35,16 +37,16 @@ const BarbershopItem = ({ barbershop }: Barbershop) => {
               {barbershop.address}
             </p>
           </div>
-          <Button variant={"outline"} className="w-full" onClick={handleBookingClick}>
+          <Button variant={theme === "dark" ? "outline" : "default"} className="w-full" onClick={handleBookingClick}>
             Ver detalhes
           </Button>
         </div>
 
         <Badge
-          className="absolute left-4 top-4 z-10 flex items-center gap-1 bg-secondary/80 text-white hover:bg-secondary/80"
+          className="absolute left-4 top-4 z-10 flex items-center gap-1 bg-neutral-900 hover:bg-neutral-900 dark:bg-secondary/80 dark:text-white dark:hover:bg-secondary/80"
           variant={"default"}
         >
-          <FaStar size={13} className="text-primary" />
+          <FaStar size={13} className="text-yellow-600" />
           {barbershop.rating.toString()}
         </Badge>
       </CardContent>

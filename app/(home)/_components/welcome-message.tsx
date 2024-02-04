@@ -7,7 +7,7 @@ const WelcomeMessage = () => {
   const { data, status } = useSession();
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col text-white">
       {status === "authenticated" ? (
         <h2 className="text-xl">
           Olá, <span className="font-bold">{data?.user?.name}!</span>

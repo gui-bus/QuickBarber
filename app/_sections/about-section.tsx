@@ -9,14 +9,14 @@ interface infoCardProps {
 
 const InfoCard = ({ description, title }: infoCardProps) => {
   return (
-    <Card>
-      <CardHeader className="flex items-center rounded-t-xl p-0 py-3 text-center text-xl font-medium text-white">
+    <Card className="border-none">
+      <CardHeader className="flex items-center rounded-t-xl p-0 py-3 text-center text-xl font-medium text-white bg-neutral-800">
         {title}
       </CardHeader>
       <Separator />
-      <CardContent className="bg-background">
+      <CardContent className="dark:bg-background border-2 rounded-b-xl border-neutral-800 border-t-0">
         <CardContent className="p-0 pt-5">
-          <p className="text-sm font-light text-white/70 text-center">{description}</p>
+          <p className="text-sm font-light dark:text-white/70 text-center">{description}</p>
         </CardContent>
       </CardContent>
     </Card>
@@ -58,7 +58,7 @@ const AboutSection = () => {
           <h1 className="text-2xl font-bold uppercase md:text-3xl">
             Sua jornada de estilo começa aqui
           </h1>
-          <p className="text-sm font-light text-white/70">
+          <p className="text-sm font-light dark:text-white/70">
             Descubra a praticidade da QUICK BARBER, a plataforma de agendamento
             online que simplifica todo o processo de reserva de horários em
             barbearias.

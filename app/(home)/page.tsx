@@ -36,7 +36,7 @@ export default async function Home() {
       <SearchSection />
 
       <div className="mt-6 flex select-none flex-col items-center justify-center gap-y-2 lg:hidden">
-        <h2 className="flex items-center gap-2 px-5 text-sm font-semibold uppercase text-neutral-300">
+        <h2 className="flex items-center gap-2 px-5 text-sm font-semibold uppercase dark:text-white/70">
           Recomendados <BsStars size={25} />
         </h2>
 
@@ -63,7 +63,7 @@ export default async function Home() {
       </div>
 
       <div className="mt-6 flex select-none flex-col items-center justify-center gap-y-2">
-        <h2 className="flex items-center gap-2 px-5 text-sm font-semibold uppercase text-neutral-300">
+        <h2 className="flex items-center gap-2 px-5 text-sm font-semibold uppercase dark:text-white/70">
           Populares <BsStars size={25} />
         </h2>
 
